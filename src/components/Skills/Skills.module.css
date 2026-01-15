@@ -1,0 +1,130 @@
+.skills {
+  background: var(--bg-secondary);
+  padding: 100px 0;
+}
+
+.skillsContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.skillCategory {
+  margin-bottom: 40px;
+}
+
+.skillCategory h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.skillItems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skillItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.skillName {
+  min-width: 80px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.skillBar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.skillProgress {
+  height: 100%;
+  background: var(--accent-500);
+  border-radius: var(--radius-full);
+  width: 0%;
+  transition: width 1s ease;
+  position: relative;
+}
+
+.skillProgress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: skill-shine 2s infinite;
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.techItem {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.techItem:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent500);
+}
+
+.techItem i {
+  font-size: 2rem;
+  color: var(--accent-500);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.techItem span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .skillsContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .techGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .skillsContent {
+    gap: 30px;
+  }
+
+  .techGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .skillCategory {
+    margin-bottom: 30px;
+  }
+}

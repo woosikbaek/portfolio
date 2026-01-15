@@ -1,0 +1,183 @@
+.about {
+  background: var(--bg-primary);
+  padding: 100px 0;
+}
+
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.aboutIntro {
+  margin-bottom: 40px;
+}
+
+.aboutIntro h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.aboutIntro p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.aboutFeatures {
+  margin-bottom: 40px;
+}
+
+.featureItem {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 24px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.featureItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.featureIcon {
+  width: 60px;
+  height: 60px;
+  background: var(--accent-500);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.featureContent h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.featureContent p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.aboutCta {
+  display: inline-block;
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.btnOutline:hover {
+  background: var(--text-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.aboutVisual {
+  display: flex;
+  justify-content: center;
+}
+
+.glassCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  max-width: 400px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cardDots {
+  display: flex;
+  gap: 6px;
+}
+
+.cardDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.cardDot:nth-child(1) { background: #ff5f57; }
+.cardDot:nth-child(2) { background: #ffbd2e; }
+.cardDot:nth-child(3) { background: #28ca42; }
+
+.cardTitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.cardContent {
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.codeLine {
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+}
+
+.codeKey { color: #ff79c6; }
+.codeColon { color: var(--text-primary); margin: 0 4px; }
+.codeString { color: #f1fa8c; }
+.codeArray { color: #bd93f9; }
+.codeNumber { color: #bd93f9; }
+.codeBoolean { color: #50fa7b; }
+
+@media (max-width: 1024px) {
+  .aboutContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutContent {
+    gap: 30px;
+  }
+
+  .aboutIntro h3 {
+    font-size: 1.5rem;
+  }
+
+  .featureItem {
+    padding: 20px;
+  }
+
+  .glassCard {
+    max-width: 100%;
+  }
+}
