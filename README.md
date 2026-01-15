@@ -1,16 +1,183 @@
-# React + Vite
+# 백우식 포트폴리오 - AI & IoT 기반 스마트 솔루션 개발자
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 프로젝트 개요
 
-Currently, two official plugins are available:
+최신 웹 디자인 트렌드를 적용한 고급 포트폴리오 웹사이트입니다. AI와 IoT 기술을 활용한 스마트 솔루션 개발을 전문으로 하는 풀스택 개발자 백우식의 포트폴리오입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ 주요 특징
 
-## React Compiler
+### 🎨 현대적인 디자인 시스템
+- **글래스모피즘(Glassmorphism)**: 반투명 배경과 블러 효과를 활용한 세련된 디자인
+- **신티즘(Neumorphism)**: 부드러운 그림자와 입체감 있는 UI 요소
+- **그라디언트 애니메이션**: 다이나믹한 색상 전환 효과
+- **오로라 배경**: 부드러운 색상 흐름 애니메이션
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### ⚡ 고급 애니메이션
+- **3D 변환 효과**: 프로젝트 카드의 입체적인 회전 및 기울기 효과
+- **페럴랙스 스크롤링**: 깊이감 있는 스크롤 경험
+- **마우스 추적**: 커서 따라다니는 인터랙티브 요소
+- **부유 애니메이션**: 무중력처럼 떠다니는 시각적 요소들
 
-## Expanding the ESLint configuration
+### 🎯 인터랙티브 요소
+- **마그네틱 호버**: 마우스를 끌어당기는 듯한 효과
+- **리플 효과**: 버튼 클릭시 물결치는 애니메이션
+- **3D 틸트**: 마우스 움직임에 반응하는 3D 틸트 효과
+- **글로우 효과**: 호버시 빛나는 효과
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📋 구현된 섹션
+
+### 🏠 Hero 섹션
+- **고급 그라디언트 배경**: 다중 레이어 그라디언트와 오로라 효과
+- **애니메이션 타이틀**: 서서히 나타나는 텍스트 효과
+- **인터랙티브 통계**: 동적으로 카운트업되는 숫자
+- **부유 카드**: 3D 효과의 플로팅 카드들
+
+### 👤 About 섹션
+- **글래스 카드**: 반투명한 코드 에디터 스타일 카드
+- **특성 아이템**: 호버 애니메이션이 적용된 특성 박스
+- **스킬 프로그레스바**: 애니메이션되는 능력치 표시
+
+### 💼 Projects 섹션
+- **3D 프로젝트 카드**: 마우스 움직임에 반응하는 입체적 카드
+- **호버 오버레이**: 프로젝트 상세 정보 표시
+- **기술 스택 태그**: 색상 코딩된 기술 태그
+- **날짜 정렬**: 최신순으로 정렬된 프로젝트
+
+### 🛠️ Skills 섹션
+- **애니메이션 차트**: 스크롤시 채워지는 스킬 바
+- **기술 아이콘**: 호버 효과가 적용된 기술 아이콘
+- **카테고리 분류**: Frontend/Backend로 구분된 스킬셋
+
+### 📞 Contact 섹션
+- **글래스모피즘 폼**: 반투명한 연락처 폼
+- **소셜 링크**: 애니메이션되는 소셜 아이콘
+- **즉각적인 피드백**: 폼 제출시 알림 메시지
+
+## 🌟 최신 디자인 트렌드
+
+### 시각적 효과
+- **입체감 있는 그림자**: 다중 레이어 그림자 효과
+- **블러 효과**: 배경 블러를 활용한 깊이감
+- **색상 변화**: 다크모드와 라이트모드 지원
+- **부드러운 전환**: 모든 요소에 자연스러운 전환 효과
+
+### 인터랙션
+- **마이크로 인터랙션**: 작지만 만족스러운 상호작용
+- **호버 애니메이션**: 마우스 오버시 다양한 효과
+- **클릭 피드백**: 즉각적인 시각적 피드백
+- **스크롤 트리거**: 스크롤시 활성화되는 애니메이션
+
+## 🚀 기술 스택
+
+### Frontend
+- **HTML5**: 시맨틱 마크업
+- **CSS3**: 고급 애니메이션과 그리드
+- **JavaScript ES6+**: 현대적인 자바스크립트
+- **AOS**: 스크롤 애니메이션 라이브러리
+
+### 디자인
+- **Font Awesome**: 아이콘 라이브러리
+- **Google Fonts**: 인터 폰트 패밀리
+- **CSS Variables**: 테마 시스템
+- **CSS Grid & Flexbox**: 현대적인 레이아웃
+
+### 애니메이션
+- **CSS Keyframes**: 순수 CSS 애니메이션
+- **Transform & Transition**: 3D 변환 효과
+- **Intersection Observer**: 성능 최적화된 스크롤 감지
+- **RequestAnimationFrame**: 부드러운 애니메이션
+
+## 📱 반응형 디자인
+
+### 다양한 기기 지원
+- **데스크톱**: 1920px 이상의 넓은 화면
+- **노트북**: 1024px ~ 1919px
+- **태블릿**: 768px ~ 1023px
+- **모바일**: 767px 이하
+
+### 적응형 UI
+- **유동적인 그리드**: 화면 크기에 따라 조정
+- **가변적인 타이포그래피**: 뷰포트에 따라 조정
+- **터치 최적화**: 모바일 기기를 위한 터치 대상
+- **성능 최적화**: 모바일 기기에서도 부드러운 애니메이션
+
+## 🎯 성능 최적화
+
+### 로딩 성능
+- **지연 로딩**: 필요할 때만 애니메이션 실행
+- **스크롤 최적화**: 디바운스 처리된 스크롤 이벤트
+- **리소스 최적화**: 효율적인 CSS 애니메이션
+- **압축**: 최소화된 코드
+
+### 접근성
+- **키보드 네비게이션**: Tab 키로 전체 사이트 탐색
+- **스크린 리더**: ARIA 레이블과 시맨틱 HTML
+- **색상 대비**: WCAG 2.1 기준 충족
+- **모션 감소**: prefers-reduced-motion 지원
+
+## 🌐 브라우저 호환성
+
+### 지원 브라우저
+- **Chrome**: 80+
+- **Firefox**: 75+
+- **Safari**: 13+
+- **Edge**: 80+
+
+### 폴리필
+- **CSS Grid**: 구형 브라우저 지원
+- **Intersection Observer**: 스크롤 감지
+- **CSS Variables**: 테마 시스템
+
+## 📁 파일 구조
+
+```
+portfolio/
+├── index.html          # 메인 HTML 파일
+├── styles.css          # 스타일시트
+├── script.js           # 자바스크립트
+└── README.md           # 프로젝트 문서
+```
+
+## 🚀 배포 방법
+
+이 포트폴리오는 정적 웹사이트로, **Publish 탭**에서 한 클릭으로 배포할 수 있습니다:
+
+1. 프로젝트 완성 후 **Publish 탭**으로 이동
+2. 배포 버튼 클릭
+3. 자동 생성된 URL로 접속
+
+## 🎨 커스터마이징
+
+### 색상 테마
+CSS 변수를 수정하여 손쉽게 색상 테마를 변경할 수 있습니다:
+
+```css
+:root {
+    --primary-500: #your-color;
+    --accent-500: #your-accent;
+    --gradient-1: linear-gradient(135deg, #color1 0%, #color2 100%);
+}
+```
+
+### 애니메이션 속도
+애니메이션 지속 시간을 조정하여 원하는 속도로 변경:
+
+```css
+--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+```
+
+### 콘텐츠 수정
+HTML 파일의 섹션별 콘텐츠를 쉽게 수정하여 나만의 포트폴리오로 만들 수 있습니다.
+
+## 📞 연락처 정보
+
+- **이메일**: woosikbaek@gmail.com
+- **GitHub**: https://github.com/woosikbaek
+
+## 📄 라이선스
+
+이 프로젝트는 개인 포트폴리오 용도로 제작되었습니다. 상업적 사용시 적절한 라이선스를 확인하세요.
+
+---
+
+**최신 업데이트**: 2026년 1월  
