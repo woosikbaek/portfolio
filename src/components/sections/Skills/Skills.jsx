@@ -1,17 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Button from '../../common/Button/Button';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Skills.module.css';
 import skillsData from '../../../data/skills.json';
 
 const Skills = () => {
+  // Force re-render check
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
+        staggerChildren: 0.1
       }
     }
   };
@@ -35,6 +35,7 @@ const Skills = () => {
           title="Skills"
           subtitle="다양한 기술 스택을 활용하여 프로젝트를 완성합니다."
         />
+
         <motion.div
           className={styles.categoryGrid}
           variants={containerVariants}
@@ -52,7 +53,9 @@ const Skills = () => {
               <div className={styles.skillsList}>
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex} className={styles.skillItem}>
-                    {skill.iconClass ? (
+                    {skill.image ? (
+                      <img src={skill.image} alt={skill.name} className={styles.skillImage} />
+                    ) : skill.iconClass ? (
                       <i className={`${skill.iconClass} ${styles.techIcon}`}></i>
                     ) : (
                       <span className={styles.emojiIcon}>{skill.emoji}</span>

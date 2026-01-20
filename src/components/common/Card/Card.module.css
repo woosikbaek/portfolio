@@ -8,6 +8,8 @@
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  /* 성능 최적화: 레이어 분리 */
+  transform: translateZ(0); 
 }
 
 .card::before {
@@ -30,7 +32,7 @@
 .card:hover {
   background: var(--color-bg-card-hover);
   border-color: var(--color-border-hover);
-  transform: translateY(-4px);
+  transform: translateY(-4px) translateZ(0); /* translateZ 유지 */
   box-shadow: var(--shadow-lg);
 }
 
@@ -45,8 +47,8 @@
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
 }
 
 .gradient {

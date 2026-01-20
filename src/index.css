@@ -141,6 +141,9 @@ a:hover {
 .section {
   padding: var(--section-padding);
   position: relative;
+  /* 스크롤 시 리페인트 방지를 위해 레이어 분리 */
+  transform: translateZ(0); 
+  will-change: transform;
 }
 
 /* Lenis Recommended CSS */

@@ -66,7 +66,7 @@ const Hero = () => {
       </div>
 
       <motion.div
-        className={styles.scrollDown}
+        className={styles.scrollIndicator}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{

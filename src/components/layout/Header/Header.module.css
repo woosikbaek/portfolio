@@ -10,6 +10,9 @@
   border-bottom: 1px solid var(--glass-border);
   z-index: var(--z-fixed);
   transition: all var(--transition-base);
+  /* 성능 최적화: GPU 레이어 분리 */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .header.scrolled {
@@ -60,6 +63,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-base);
   text-decoration: none;
+  cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-md);
   transition: all var(--transition-base);
