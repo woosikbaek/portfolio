@@ -1,0 +1,59 @@
+{
+  "categories": [
+    {
+      "name": "Frontend",
+      "icon": "💻",
+      "skills": [
+        { "name": "React", "iconClass": "devicon-react-original colored" },
+        { "name": "JavaScript", "iconClass": "devicon-javascript-plain colored" },
+        { "name": "Redux", "iconClass": "devicon-redux-original colored" },
+        { "name": "React Query", "iconClass": "devicon-react-original colored" },
+        { "name": "HTML5", "iconClass": "devicon-html5-plain colored" },
+        { "name": "CSS3", "iconClass": "devicon-css3-plain colored" },
+        { "name": "Bootstrap", "iconClass": "devicon-bootstrap-plain colored" },
+        { "name": "Vite", "iconClass": "devicon-vitejs-plain colored" }
+      ]
+    },
+    {
+      "name": "Backend",
+      "icon": "⚙️",
+      "skills": [
+        { "name": "Flask", "iconClass": "devicon-flask-original colored" },
+        { "name": "Spring Boot", "iconClass": "devicon-spring-original colored" },
+        { "name": "Python", "iconClass": "devicon-python-plain colored" },
+        { "name": "MySQL", "iconClass": "devicon-mysql-plain colored" }
+      ]
+    },
+    {
+      "name": "IoT & Hardware",
+      "icon": "🤖",
+      "skills": [
+        { "name": "Raspberry Pi", "iconClass": "devicon-raspberrypi-line colored" },
+        { "name": "MQTT", "emoji": "📡" },
+        { "name": "Sensors", "emoji": "🌡️" },
+        { "name": "Robot Arm", "emoji": "🦾" }
+      ]
+    },
+    {
+      "name": "Libraries & APIs",
+      "icon": "📚",
+      "skills": [
+        { "name": "Leaflet", "emoji": "🗺️" },
+        { "name": "Socket.io", "iconClass": "devicon-socketio-original colored" },
+        { "name": "Axios", "iconClass": "devicon-axios-plain colored" },
+        { "name": "OAuth", "iconClass": "devicon-google-plain colored" },
+        { "name": "JWT", "emoji": "🔑" }
+      ]
+    },
+    {
+      "name": "Tools",
+      "icon": "🛠️",
+      "skills": [
+        { "name": "Git", "iconClass": "devicon-git-plain colored" },
+        { "name": "GitHub", "iconClass": "devicon-github-original colored" },
+        { "name": "npm", "iconClass": "devicon-npm-original-wordmark colored" },
+        { "name": "DBeaver", "iconClass": "devicon-dbeaver-plain colored" }
+      ]
+    }
+  ]
+}
