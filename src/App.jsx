@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/layout/Header/Header';
-import Footer from './components/layout/Footer/Footer';
 import Hero from './components/sections/Hero/Hero';
 import About from './components/sections/About/About';
 import Skills from './components/sections/Skills/Skills';
 import Projects from './components/sections/Projects/Projects';
 import Experience from './components/sections/Experience/Experience';
 import Contact from './components/sections/Contact/Contact';
+import Footer from './components/layout/Footer/Footer';
+import Lenis from '@studio-freight/lenis';
+import './App.css';
 
 function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
-    <div className="app">
+    <div className="App">
       <Header />
       <main>
         <Hero />

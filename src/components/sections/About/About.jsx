@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import Button from '../../common/Button/Button';
 import styles from './About.module.css';
 import profileData from '../../../data/profile.json';
@@ -15,7 +16,13 @@ const About = () => {
     <section id="about" className={styles.about}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.imageSection}>
+          <motion.div
+            className={styles.imageSection}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <div className={styles.imageWrapper}>
               <img
                 src={profileData.avatar}
@@ -27,9 +34,15 @@ const About = () => {
                 }}
               />
             </div>
-          </div>
+          </motion.div>
 
-          <div className={styles.textSection}>
+          <motion.div
+            className={styles.textSection}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
             <div>
               <h2 className={styles.title}>
                 About <span className={styles.gradient}>Me</span>
@@ -69,7 +82,7 @@ const About = () => {
                 이력서 다운로드
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

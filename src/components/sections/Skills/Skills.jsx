@@ -1,44 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import Button from '../../common/Button/Button';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Skills.module.css';
 import skillsData from '../../../data/skills.json';
 
 const Skills = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
       }
-    };
-  }, []);
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <section id="skills" className={styles.skills} ref={sectionRef}>
+    <section id="skills" className={styles.skills}>
       <div className={styles.container}>
         <SectionTitle
           title="Skills"
-          subtitle="제가 사용하는 기술 스택과 도구들입니다."
+          subtitle="다양한 기술 스택을 활용하여 프로젝트를 완성합니다."
         />
-
-        <div className={styles.categoryGrid}>
+        <motion.div
+          className={styles.categoryGrid}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {skillsData.categories.map((category, index) => (
-            <div key={index} className={styles.categoryCard}>
+            <motion.div key={index} className={styles.categoryCard} variants={itemVariants}>
               <div className={styles.categoryHeader}>
                 <span className={styles.categoryIcon}>{category.icon}</span>
                 <h3 className={styles.categoryTitle}>{category.name}</h3>
@@ -56,9 +61,9 @@ const Skills = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

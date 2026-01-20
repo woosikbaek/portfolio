@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Button from '../../common/Button/Button';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Contact.module.css';
@@ -35,7 +36,13 @@ const Contact = () => {
         />
 
         <div className={styles.content}>
-          <div className={styles.info}>
+          <motion.div
+            className={styles.info}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <div>
               <h3 className={styles.infoTitle}>Let's work together</h3>
               <p className={styles.infoDescription}>
@@ -99,9 +106,16 @@ const Contact = () => {
                 </svg>
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <motion.form
+            className={styles.form}
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          >
             <div className={styles.formGroup}>
               <label htmlFor="name" className={styles.label}>
                 이름
@@ -149,11 +163,10 @@ const Contact = () => {
             <Button type="submit" variant="primary" className={styles.submitButton}>
               메시지 보내기
             </Button>
-          </form>
+          </motion.form>
         </div>
       </div>
     </section>
   );
 };
-
 export default Contact;
