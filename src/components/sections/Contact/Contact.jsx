@@ -61,7 +61,7 @@ const Contact = memo(() => {
                 </div>
                 <div className={styles.methodContent}>
                   <div className={styles.methodLabel}>Gmail</div>
-                  <div className={styles.methodValue}>{profileData.email}</div>
+                  <div className={styles.methodValue}>woosikbaek@gmail.com</div>
                 </div>
               </a>
 
