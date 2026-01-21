@@ -6,13 +6,13 @@ import styles from './PhysicsBackground.module.css';
 const PhysicsBackground = () => {
   const sceneRef = useRef(null);
   const engineRef = useRef(null);
-  const runnerRef = useRef(null);
+  const requestRef = useRef(null); // 애니메이션 프레임 ID 저장용
 
   useEffect(() => {
-    // 1. 엔진 및 물리 세계 초기화 (성능 고도화)
+    // 1. 엔진 및 물리 세계 초기화
     const engine = Matter.Engine.create({
       enableSleeping: true,
-      positionIterations: 3, // 정밀도 낮춤 (성능 이득)
+      positionIterations: 3,
       velocityIterations: 2
     });
     engineRef.current = engine;
@@ -27,7 +27,7 @@ const PhysicsBackground = () => {
         height: window.innerHeight * 2.3,
         wireframes: false,
         background: 'transparent',
-        pixelRatio: 1, // 절대 1 고정 (성능 핵심)
+        pixelRatio: 1,
         hasBounds: true
       }
     });
@@ -43,7 +43,7 @@ const PhysicsBackground = () => {
     const textureMap = {};
     const radius = 26;
 
-    // 2. 텍스처 프리-렌더링 (60x60 저해상도 최적화)
+    // 2. 텍스처 프리-렌더링
     const createTexture = async (skill) => {
       return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
@@ -101,7 +101,9 @@ const PhysicsBackground = () => {
       });
     };
 
+    let spawnInterval;
     const startSpawning = async () => {
+      // 모든 아이콘 텍스처를 미리 캐싱
       for (const skill of allSkills) {
         if (!textureMap[skill.name]) {
           textureMap[skill.name] = await createTexture(skill);
@@ -109,9 +111,9 @@ const PhysicsBackground = () => {
       }
 
       let count = 0;
-      const MAX_ICONS = 90; // 개수를 살짝 줄여 안정성 확보
+      const MAX_ICONS = 90;
 
-      const spawnInterval = setInterval(() => {
+      spawnInterval = setInterval(() => {
         if (!engineRef.current || count >= MAX_ICONS) {
           clearInterval(spawnInterval);
           return;
@@ -122,8 +124,8 @@ const PhysicsBackground = () => {
 
         const body = Matter.Bodies.circle(x, -50, radius, {
           restitution: 0.4,
-          frictionAir: 0.03, // 일정한 낙하 속도를 위해 공기저항 유지
-          sleepThreshold: 15, // 멈춤 감지 더 민감하게
+          frictionAir: 0.03,
+          sleepThreshold: 15,
           render: {
             sprite: {
               texture: textureMap[skill.name],
@@ -136,25 +138,22 @@ const PhysicsBackground = () => {
         Matter.World.add(world, body);
         count++;
       }, 200);
-      return spawnInterval;
     };
 
-    let spawnInterval;
-    startSpawning().then(id => spawnInterval = id);
+    // 가이드 추천에 따라 페이지 로딩 후 800ms 지연 스폰 시작
+    const spawnTimeout = setTimeout(startSpawning, 800);
 
-    // 3. [성능 핵심] 수동 프레임 제어 루프
+    // 3. 수동 프레임 제어 루프 (취소 가능하도록 수정)
     const update = () => {
       if (engineRef.current) {
-        // 물리 엔진을 일정한 시차(16.6ms)만큼만 업데이트하도록 강제
-        // 이렇게 하면 렉이 걸려도 공이 튀지 않고 천천히 움직입니다.
         Matter.Engine.update(engine, 1000 / 60);
-        requestAnimationFrame(update);
+        requestRef.current = requestAnimationFrame(update);
       }
     };
-    requestAnimationFrame(update);
+    requestRef.current = requestAnimationFrame(update);
     Matter.Render.run(render);
 
-    // 4. 리사이즈 핸들러 버그 수정
+    // 4. 리사이즈 핸들러
     const handleResize = () => {
       if (!render.canvas) return;
       const width = window.innerWidth;
@@ -177,6 +176,8 @@ const PhysicsBackground = () => {
     return () => {
       window.removeEventListener('resize', debouncedResize);
       if (spawnInterval) clearInterval(spawnInterval);
+      if (spawnTimeout) clearTimeout(spawnTimeout);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current); // 애니메이션 프레임 취소
 
       Matter.Render.stop(render);
       Matter.Engine.clear(engine);
