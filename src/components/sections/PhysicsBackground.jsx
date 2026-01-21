@@ -46,8 +46,11 @@ const PhysicsBackground = () => {
           const parts = skill.iconClass.split(' ')[0].split('-');
           if (parts.length >= 3) {
             const name = parts[1];
-            const version = parts[2];
-            finalImage = `https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/${name}/${name}-${version}.svg`;
+            // axios 같은 특정 라이브러리는 plain 버전이 더 안정적임
+            let version = parts[2] === 'plain' ? 'original' : parts[2];
+            if (name === 'axios') version = 'plain';
+
+            finalImage = `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-${version}.svg`;
           }
         }
 
