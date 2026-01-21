@@ -164,16 +164,49 @@
 }
 
 /* Responsive */
+@media (max-width: 968px) {
+  .content {
+    gap: var(--spacing-2xl);
+  }
+}
+
 @media (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
   }
 
   .infoTitle {
     font-size: var(--font-size-2xl);
+    text-align: center;
+  }
+
+  .infoDescription {
+    text-align: center;
+    font-size: var(--font-size-base);
   }
 
   .socialLinks {
     justify-content: center;
+  }
+
+  .form {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .contactMethod {
+    padding: var(--spacing-sm);
+  }
+
+  .methodIcon {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-lg);
+  }
+
+  .methodValue {
+    font-size: var(--font-size-sm);
   }
 }

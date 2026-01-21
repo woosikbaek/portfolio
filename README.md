@@ -1,59 +1,73 @@
-# 🌌 Woosik's Premium Portfolio - Starfield Edition
+# 🌌 Woosik Baek - Cinematic Frontend Portfolio
 
-성능과 감각적인 연출의 정점을 지향하는 **Cinematic Deep Dark** 기반의 프론트엔드 포트폴리오입니다.
+성능과 감각적인 연출의 균형을 맞춘 **Cinematic Deep Dark** 프론트엔드 포트폴리오입니다.  
+사용자의 시선을 사로잡는 인물의 등장을 시작으로, 우주의 신비로움을 담은 인터랙티브 배경이 펼쳐집니다.
 
-## ✨ 프로젝트 하이라이트
+---
 
-### 🎬 Cinematic Intro Experience
-- **Scroll-Driven Entrance**: 페이지 접속 시 인물의 이미지가 중앙에 배치되며, 스크롤에 따라 이미지 크기와 투명도가 정교하게 변하며 컨텐츠가 등장하는 몰입형 연출.
-- **Breathing Effect**: 정지 상태일 때 인물 이미지가 은은하게 반짝이며 생동감을 부여.
+## ✨ Key Features
 
-### ☄️ High-Performance Space Environment
-- **Physics-Based Canvas Background**: Matter.js의 무거운 연산을 제거하고 순수 Canvas API로 구현된 경량 우주 배경.
-- **Starfield & Comet Animation**: 수백 개의 반짝이는 별과 가끔씩 밤하늘을 가르는 혜성 효과로 깊이 있는 공간감 선사.
-- **Smart Icon Mapping**: 기술 스택 아이콘이 로드되지 않을 경우 자동으로 행성/천체 아이콘으로 대체되는 Robust한 폴백 시스템.
+### 🎬 **Cinematic Scroll Introduction**
+- **몰입형 등장 연출**: 페이지 접속 시 인물 이미지가 화면을 꽉 채우며 등장하고, 스크롤에 따라 부드럽게 배경으로 가라앉으며 컨텐츠가 서서히 드러납니다.
+- **Dynamic Header**: 시네마틱 연출이 끝나는 타이밍에 맞춰 헤더와 컨텐츠가 나타나는 정교한 스크롤 싱크를 구현했습니다.
 
-### 🚀 Technical Excellence
-- **Ultra Smooth Scrolling**: `Lenis`를 통한 부드러운 스크롤과 `Framer Motion`의 조화로운 인터랙션.
-- **Extreme Optimization**: GPU 가속 레이어 분리 및 `will-change` 속성 활용으로 60fps 유지.
-- **JSON-Driven Content**: 모든 텍스트와 기술 스택 데이터를 JSON으로 분리하여 유지보수성 극대화.
+### ☄️ **Performance-First Physics Background**
+- **Lightweight Canvas Engine**: Matter.js 같은 무거운 물리 엔진 없이 순수 Canvas API만으로 수백 개의 별과 부유하는 기술 스택 아이콘을 구현했습니다.
+- **Robust Icon Loader**: Devicon CDN에서 아이콘을 불러오지 못할 경우 자동으로 행성 및 천체 아이콘으로 대체되는 폴백 시스템을 갖추고 있습니다.
 
-## 🛠️ 기술 스택
+### 📱 **Fully Responsive Experience**
+- **Adaptive Typography**: 화면 크기에 따라 폰트 크기와 간격이 유동적으로 조절되는 디자인 시스템을 적용했습니다.
+- **Mobile-First Navigation**: 모바일에서도 쾌적하게 사용할 수 있는 글래스모피즘 기반의 네비게이션 메뉴를 제공합니다.
 
-- **Framework**: `React 19`
+### 🚀 **Technical Highlights**
+- **Ultra Smooth Scrolling**: Lenis 라이브러리를 통해 데스크탑에서 부드러운 관성 스크롤을 제공합니다.
+- **GPU Acceleration**: `will-change`, `translateZ(0)` 등의 속성을 활용하여 60fps의 부드러운 애니메이션을 유지합니다.
+- **SEO & Social Sharing**: Vercel 배포 도메인에 최적화된 Open Graph 태그와 Twitter Card 설정을 통해 SNS 공유 시 완벽한 미리보기를 제공합니다.
+
+---
+
+## 🛠 Tech Stack
+
+- **Core**: `React 19`, `JavaScript (ES6+)`
 - **Animation**: `Framer Motion`
-- **Scroll Engine**: `@studio-freight/lenis`
-- **Background Engine**: `Custom Canvas API`
-- **Styling**: `CSS Modules` (Pure JavaScript Context)
-- **Icons**: `Devicon SVG Integration`
+- **Scrolling**: `@studio-freight/lenis`
+- **Styling**: `CSS Modules` (Pure CSS Design System)
+- **Deployment**: `Vercel`
 
-## 📂 프로젝트 구조
+---
+
+## 📂 Project Structure
 
 ```text
 src/
 ├── components/
-│   ├── layout/           # Header (Profile Image Logo & Navigation)
-│   ├── sections/         # Hero(Cinematic), Skills(Starfield), Projects, Contact
-│   └── common/           # Reusable Button & Card Components
-├── data/                 # JSON contents (profile, skills, projects)
-├── styles/               # Design Tokens (variables.module.css)
-└── index.css             # Performance Optimized Global Styles
+│   ├── layout/           # Header, Footer (Fixed UI)
+│   ├── sections/         # Hero, About, Skills, Projects, Experience, Contact
+│   └── common/           # Reusable Components (Button, Card, SectionTitle)
+├── data/                 # JSON-driven contents
+├── styles/               # Design Tokens & Global Styles
+└── App.jsx               # Main Layout & Scroll Engine Config
 ```
 
-## 🚀 실행 방법
+---
+
+## 🚀 Getting Started
 
 ```bash
-# 의존성 설치
+# Clone the repository
+git clone https://github.com/woosikbaek/portfolio.git
+
+# Install dependencies
 npm install
 
-# 로컬 개발 서버
+# Run development server
 npm run dev
 
-# 프로덕션 빌드 및 최적화
+# Build for production
 npm run build
 ```
 
 ---
 
 **Built with Precision & Passion**  
-수많은 별들 사이에서 빛나는 기술력과 열정을 확인해보세요. ✨🌌🚀
+백우식의 기술력과 열정이 담긴 포트폴리오입니다. 우주를 유영하듯 편안하게 감상해 보세요. ✨🌌🌑

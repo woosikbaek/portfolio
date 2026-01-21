@@ -120,22 +120,45 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .categoryGrid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
   }
   
   .skillsList {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .categoryCard {
+    padding: var(--spacing-md);
   }
 }
 
 @media (max-width: 480px) {
   .skillsList {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+  }
+
+  .skillItem {
+    min-height: 80px;
+    padding: var(--spacing-xs);
   }
   
-  .techIcon, .emojiIcon {
-    font-size: 1.75rem;
+  .techIcon, .emojiIcon, .skillImage {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .skillName {
+    font-size: 0.7rem;
   }
 }

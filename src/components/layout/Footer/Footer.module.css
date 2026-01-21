@@ -108,12 +108,25 @@
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: var(--spacing-2xl) 0 var(--spacing-lg);
+  }
   .content {
     grid-template-columns: 1fr;
+    text-align: center;
   }
-
+  .socialLinks {
+    justify-content: center;
+  }
+  .links {
+    align-items: center;
+  }
   .bottom {
     flex-direction: column;
     text-align: center;
+    gap: var(--spacing-sm);
+  }
+  .bottomLinks {
+    justify-content: center;
   }
 }
