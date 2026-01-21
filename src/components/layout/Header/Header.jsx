@@ -61,18 +61,8 @@ const Header = () => {
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <div className={styles.logo} onClick={() => scrollToSection('home')}>
-          Portfolio
+          <img src="/profileImage/wookisImage.png" alt="Logo" className={styles.logoImage} />
         </div>
-
-        <button
-          className={`${styles.menuButton} ${isMobileMenuOpen ? styles.open : ''}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
 
         <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.open : ''}`}>
           <ul className={styles.navList}>
@@ -88,6 +78,18 @@ const Header = () => {
             ))}
           </ul>
         </nav>
+
+        <div className={styles.headerRight}>
+          <button
+            className={`${styles.menuButton} ${isMobileMenuOpen ? styles.open : ''}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
     </header>
   );

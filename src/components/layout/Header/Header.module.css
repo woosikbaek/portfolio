@@ -31,14 +31,20 @@
 }
 
 .logo {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-extrabold);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  flex: 1;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   transition: transform var(--transition-base);
+}
+
+.logoImage {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .logo:hover {
@@ -96,6 +102,13 @@
 
 .navLink.active::after {
   width: 80%;
+}
+
+.headerRight {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* Mobile Menu Button */
