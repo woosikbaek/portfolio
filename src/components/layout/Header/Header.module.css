@@ -41,7 +41,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-
+}
 
 .logoImage {
   width: 45px;
@@ -49,7 +49,7 @@
   object-fit: cover;
   border-radius: var(--radius-full);
   -webkit-text-fill-color: initial;
-
+}
 
 .logo:hover {
   transform: scale(1.05);
@@ -110,7 +110,7 @@
 
 .headerRight {
   flex: 1; /*오른쪽 공간 차지*/
-
+}
 
 /* Mobile Menu Button */
 .menuButton {
