@@ -1,192 +1,173 @@
 import React, { useEffect, useRef } from 'react';
-import Matter from 'matter-js';
 import skillsData from '../../data/skills.json';
 import styles from './PhysicsBackground.module.css';
 
 const PhysicsBackground = () => {
-  const sceneRef = useRef(null);
-  const engineRef = useRef(null);
-  const requestRef = useRef(null); // 애니메이션 프레임 ID 저장용
+  const canvasRef = useRef(null);
+  const requestRef = useRef(null);
+  const scrollYRef = useRef(0);
+  const iconsRef = useRef([]);
 
   useEffect(() => {
-    // 1. 엔진 및 물리 세계 초기화
-    const engine = Matter.Engine.create({
-      enableSleeping: true,
-      positionIterations: 3,
-      velocityIterations: 2
-    });
-    engineRef.current = engine;
-    const world = engine.world;
-    engine.gravity.y = 0.8;
-
-    const render = Matter.Render.create({
-      element: sceneRef.current,
-      engine: engine,
-      options: {
-        width: window.innerWidth,
-        height: window.innerHeight * 2.3,
-        wireframes: false,
-        background: 'transparent',
-        pixelRatio: 1,
-        hasBounds: true
-      }
-    });
-
-    // 벽/바닥 생성
-    const wallOptions = { isStatic: true, render: { visible: false }, friction: 0.1 };
-    const ground = Matter.Bodies.rectangle(window.innerWidth / 2, window.innerHeight * 2.25, window.innerWidth * 2, 100, wallOptions);
-    const leftWall = Matter.Bodies.rectangle(-20, window.innerHeight, 40, window.innerHeight * 6, wallOptions);
-    const rightWall = Matter.Bodies.rectangle(window.innerWidth + 20, window.innerHeight, 40, window.innerHeight * 6, wallOptions);
-    Matter.World.add(world, [ground, leftWall, rightWall]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false }); // 성능 향상: 투명도 계산 최소화
 
     const allSkills = skillsData.categories.flatMap(cat => cat.skills);
-    const textureMap = {};
-    const radius = 26;
+    const pageHeight = document.documentElement.scrollHeight || 5000;
 
-    // 2. 텍스처 프리-렌더링
-    const createTexture = async (skill) => {
-      return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const size = 60;
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
+    // 1. 초기 아이콘(별) 생성
+    const initIcons = () => {
+      const icons = [];
+      const iconCount = 50; // 적절한 개수 유지
 
-        const drawBase = () => {
-          ctx.beginPath();
-          ctx.arc(size / 2, size / 2, size / 2 - 3, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        };
+      for (let i = 0; i < iconCount; i++) {
+        const skill = allSkills[i % allSkills.length];
+        icons.push({
+          skill,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * pageHeight, // 전체 페이지 높이에 분산
+          z: Math.random() * 0.5 + 0.2, // 깊이감 (속도/크기 계수)
+          vx: (Math.random() - 0.5) * 0.2, // 아주 느린 무작위 이동
+          vy: (Math.random() - 0.5) * 0.2,
+          type: Math.random() > 0.9 ? 'comet' : 'float', // 10%는 혜성 후보
+          opacity: Math.random() * 0.5 + 0.3,
+          radius: Math.random() * 10 + 15, // 15~25 사이의 크기
+          imageObj: null
+        });
+      }
 
-        if (skill.image) {
+      // 이미지 미리 로딩
+      icons.forEach(icon => {
+        if (icon.skill.image) {
           const img = new Image();
-          img.crossOrigin = "anonymous";
-          img.src = skill.image;
-          img.onload = () => {
-            drawBase();
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(size / 2, size / 2, size / 2 - 8, 0, Math.PI * 2);
-            ctx.clip();
-            ctx.drawImage(img, size * 0.2, size * 0.2, size * 0.6, size * 0.6);
-            ctx.restore();
-            resolve(canvas.toDataURL());
-          };
-          img.onerror = () => {
-            drawBase();
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 12px Inter';
-            ctx.textAlign = 'center';
-            ctx.fillText(skill.name.substring(0, 2), size / 2, size / 2 + 4);
-            resolve(canvas.toDataURL());
-          };
-        } else {
-          drawBase();
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = '#fff';
-          if (skill.emoji) {
-            ctx.font = '30px Arial';
-            ctx.fillText(skill.emoji, size / 2, size / 2 + 2);
-          } else {
-            ctx.font = 'bold 12px Inter';
-            ctx.fillText(skill.name.substring(0, 2), size / 2, size / 2 + 4);
-          }
-          resolve(canvas.toDataURL());
+          img.src = icon.skill.image;
+          icon.imageObj = img;
         }
       });
+
+      iconsRef.current = icons;
     };
 
-    let spawnInterval;
-    const startSpawning = async () => {
-      // 모든 아이콘 텍스처를 미리 캐싱
-      for (const skill of allSkills) {
-        if (!textureMap[skill.name]) {
-          textureMap[skill.name] = await createTexture(skill);
-        }
+    // 2. 혜성(Comet) 발사 로직
+    const triggerComet = (icon) => {
+      if (icon.type === 'comet' && !icon.isFlying) {
+        icon.isFlying = true;
+        icon.x = -100;
+        icon.y = Math.random() * window.innerHeight + scrollYRef.current;
+        icon.vx = Math.random() * 5 + 5; // 빠른 속도
+        icon.vy = (Math.random() - 0.5) * 2;
+        icon.opacity = 1;
       }
+    };
 
-      let count = 0;
-      const MAX_ICONS = 90;
+    // 3. 드로잉 함수
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // 배경을 지워 투명하게 유지
 
-      spawnInterval = setInterval(() => {
-        if (!engineRef.current || count >= MAX_ICONS) {
-          clearInterval(spawnInterval);
-          return;
-        }
+      const scrollY = window.scrollY;
+      scrollYRef.current = scrollY;
 
-        const skill = allSkills[count % allSkills.length];
-        const x = Math.random() * (window.innerWidth - 80) + 40;
+      iconsRef.current.forEach(icon => {
+        // 위치 업데이트
+        icon.x += icon.vx;
+        icon.y += icon.vy;
 
-        const body = Matter.Bodies.circle(x, -50, radius, {
-          restitution: 0.4,
-          frictionAir: 0.03,
-          sleepThreshold: 15,
-          render: {
-            sprite: {
-              texture: textureMap[skill.name],
-              xScale: (radius * 2) / 60,
-              yScale: (radius * 2) / 60
-            }
+        // 화면 밖으로 나가면 반대편으로 (Floater 기준)
+        if (icon.type === 'float') {
+          if (icon.x < -50) icon.x = canvas.width + 50;
+          if (icon.x > canvas.width + 50) icon.x = -50;
+          if (icon.y < -50) icon.y = pageHeight + 50;
+          if (icon.y > pageHeight + 50) icon.y = -50;
+        } else if (icon.isFlying) {
+          // 혜성 로직
+          if (icon.x > canvas.width + 200) {
+            icon.isFlying = false;
+            icon.opacity = Math.random() * 0.5 + 0.3;
           }
-        });
+        }
 
-        Matter.World.add(world, body);
-        count++;
-      }, 200);
+        // 혜성 랜덤 발사
+        if (icon.type === 'comet' && !icon.isFlying && Math.random() > 0.999) {
+          triggerComet(icon);
+        }
+
+        // 현재 뷰포트에 보이는지 확인
+        const relativeY = icon.y - scrollY;
+        if (relativeY > -100 && relativeY < canvas.height + 100) {
+          ctx.save();
+          ctx.globalAlpha = icon.opacity * (icon.isFlying ? 1 : icon.z); // 멀리 있는건 흐릿하게
+
+          const scale = icon.isFlying ? 1.2 : icon.z + 0.5;
+          const currentRadius = icon.radius * scale;
+
+          // 1. 공 모양 배경
+          ctx.beginPath();
+          ctx.arc(icon.x, relativeY, currentRadius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(20, 20, 40, 0.8)';
+          ctx.fill();
+          ctx.strokeStyle = icon.isFlying ? 'rgba(168, 85, 247, 0.8)' : 'rgba(99, 102, 241, 0.3)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // 2. 아이콘 또는 텍스트
+          if (icon.imageObj && icon.imageObj.complete) {
+            ctx.drawImage(
+              icon.imageObj,
+              icon.x - currentRadius * 0.6,
+              relativeY - currentRadius * 0.6,
+              currentRadius * 1.2,
+              currentRadius * 1.2
+            );
+          } else {
+            ctx.fillStyle = '#fff';
+            ctx.font = `${Math.floor(10 * scale)}px Inter`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(icon.skill.emoji || icon.skill.name.substring(0, 2), icon.x, relativeY);
+          }
+
+          // 혜성 꼬리 효과
+          if (icon.isFlying) {
+            const tailGrad = ctx.createLinearGradient(icon.x, relativeY, icon.x - 100, relativeY - icon.vy * 10);
+            tailGrad.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
+            tailGrad.addColorStop(1, 'transparent');
+            ctx.beginPath();
+            ctx.moveTo(icon.x, relativeY);
+            ctx.lineTo(icon.x - 100, relativeY - icon.vy * 10);
+            ctx.lineWidth = currentRadius;
+            ctx.strokeStyle = tailGrad;
+            ctx.stroke();
+          }
+
+          ctx.restore();
+        }
+      });
+
+      requestRef.current = requestAnimationFrame(draw);
     };
 
-    // 가이드 추천에 따라 페이지 로딩 후 800ms 지연 스폰 시작
-    const spawnTimeout = setTimeout(startSpawning, 800);
-
-    // 3. 수동 프레임 제어 루프 (취소 가능하도록 수정)
-    const update = () => {
-      if (engineRef.current) {
-        Matter.Engine.update(engine, 1000 / 60);
-        requestRef.current = requestAnimationFrame(update);
-      }
-    };
-    requestRef.current = requestAnimationFrame(update);
-    Matter.Render.run(render);
-
-    // 4. 리사이즈 핸들러
     const handleResize = () => {
-      if (!render.canvas) return;
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      render.canvas.width = width;
-      render.canvas.height = height * 2.3;
-      Matter.Body.setPosition(ground, { x: width / 2, y: height * 2.25 });
-      Matter.Body.setPosition(leftWall, { x: -20, y: height });
-      Matter.Body.setPosition(rightWall, { x: width + 20, y: height });
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
-    let resizeTimer;
-    const debouncedResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(handleResize, 250);
-    };
+    handleResize();
+    initIcons();
+    requestRef.current = requestAnimationFrame(draw);
 
-    window.addEventListener('resize', debouncedResize);
-
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('resize', debouncedResize);
-      if (spawnInterval) clearInterval(spawnInterval);
-      if (spawnTimeout) clearTimeout(spawnTimeout);
-      if (requestRef.current) cancelAnimationFrame(requestRef.current); // 애니메이션 프레임 취소
-
-      Matter.Render.stop(render);
-      Matter.Engine.clear(engine);
-      engineRef.current = null;
-      render.canvas.remove();
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(requestRef.current);
     };
   }, []);
 
-  return <div ref={sceneRef} className={styles.canvasContainer} />;
+  return (
+    <div className={styles.canvasContainer}>
+      <canvas ref={canvasRef} />
+    </div>
+  );
 };
 
 export default PhysicsBackground;
