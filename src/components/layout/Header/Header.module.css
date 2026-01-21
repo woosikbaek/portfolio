@@ -41,9 +41,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  cursor: pointer;
-  transition: transform var(--transition-base);
-}
+
 
 .logoImage {
   width: 45px;
@@ -51,9 +49,7 @@
   object-fit: cover;
   border-radius: var(--radius-full);
   -webkit-text-fill-color: initial;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-sm);
-}
+
 
 .logo:hover {
   transform: scale(1.05);
@@ -114,10 +110,7 @@
 
 .headerRight {
   flex: 1; /*오른쪽 공간 차지*/
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+
 
 /* Mobile Menu Button */
 .menuButton {
