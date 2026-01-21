@@ -8,6 +8,7 @@ import Experience from './components/sections/Experience/Experience';
 import Contact from './components/sections/Contact/Contact';
 import Footer from './components/layout/Footer/Footer';
 import Lenis from '@studio-freight/lenis';
+import PhysicsBackground from './components/sections/PhysicsBackground';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <PhysicsBackground />
       <main>
         <Hero />
         <About />

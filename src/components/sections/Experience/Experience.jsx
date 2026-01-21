@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Experience.module.css';
 import experienceData from '../../../data/experience.json';
 
-const Experience = () => {
+const Experience = memo(() => {
   return (
     <section id="experience" className={styles.experience}>
       <div className={styles.container}>
@@ -51,12 +51,12 @@ const Experience = () => {
             transition={{ duration: 0.5 }}
           >
             <h3>준비중입니다.</h3>
-            {/* <p>src/data/experience.json 파일을 수정하여 경력을 추가할 수 있습니다.</p> */}
           </motion.div>
         )}
       </div>
     </section>
   );
-};
+});
 
+Experience.displayName = 'Experience';
 export default Experience;

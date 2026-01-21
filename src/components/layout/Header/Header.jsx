@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -6,33 +7,32 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  // Hero와 싱크를 맞추기 위한 전역 스크롤 감지
+  // Hero의 wrapper가 200vh이므로, 대략 그 비율에 맞춰서 나타나게 함
+  const { scrollY } = useScroll();
+
+  // Hero에서 컨텐츠가 나타나는 타이밍(0.4 -> 0.6)과 일치시키기 위해
+  // 100vh(화면 높이) 기준으로 약 80vh 지점부터 나타나기 시작
+  const headerOpacity = useTransform(scrollY, [0, window.innerHeight * 0.8, window.innerHeight * 1.2], [0, 0, 1]);
+  const headerY = useTransform(scrollY, [0, window.innerHeight * 0.8, window.innerHeight * 1.2], [-20, -20, 0]);
+
   useEffect(() => {
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-          setIsScrolled(scrollY > 50);
+      const scrollYPos = window.scrollY;
+      setIsScrolled(scrollYPos > 50);
 
-          // Update active section based on scroll position
-          const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
-          const scrollPosition = scrollY + 100;
+      const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+      const scrollPosition = scrollYPos + 100;
 
-          for (const section of sections) {
-            const element = document.getElementById(section);
-            if (element) {
-              const { offsetTop, offsetHeight } = element;
-              if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-                setActiveSection(section);
-                break;
-              }
-            }
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
           }
-          ticking = false;
-        });
-
-        ticking = true;
+        }
       }
     };
 
@@ -58,7 +58,13 @@ const Header = () => {
   ];
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+    <motion.header
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}
+      style={{
+        opacity: headerOpacity,
+        y: headerY
+      }}
+    >
       <div className={styles.container}>
         <div className={styles.logo} onClick={() => scrollToSection('home')}>
           <img src="/profileImage/wookisImage.png" alt="Logo" className={styles.logoImage} />
@@ -91,7 +97,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

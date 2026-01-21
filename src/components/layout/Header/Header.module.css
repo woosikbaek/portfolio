@@ -31,21 +31,25 @@
 }
 
 .logo {
-  flex: 1;
+  flex: 1; /* 왼쪽 공간 차지 */
   display: flex;
   align-items: center;
-  cursor: pointer;
-  transition: transform var(--transition-base);
-}
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-extrabold);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
 
 .logoImage {
   width: 45px;
   height: 45px;
   object-fit: cover;
   border-radius: var(--radius-full);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-sm);
-}
+  -webkit-text-fill-color: initial;
+
 
 .logo:hover {
   transform: scale(1.05);
@@ -105,11 +109,8 @@
 }
 
 .headerRight {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+  flex: 1; /*오른쪽 공간 차지*/
+
 
 /* Mobile Menu Button */
 .menuButton {

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Skills.module.css';
 import skillsData from '../../../data/skills.json';
 
-const Skills = () => {
-  // Force re-render check
+const Skills = memo(() => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -70,6 +69,7 @@ const Skills = () => {
       </div>
     </section>
   );
-};
+});
 
+Skills.displayName = 'Skills';
 export default Skills;

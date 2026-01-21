@@ -2,9 +2,9 @@
 
 :root {
   /* Color Palette - Deep Matte Dark */
-  --color-bg-primary: #050505;   /* 거의 완전한 블랙 */
-  --color-bg-secondary: #111111; /* 구분감을 주는 다크 그레이 */
-  --color-bg-tertiary: #1a1a1a;
+  --color-bg-primary: #020205;   /* 칠흑 같은 블랙에 가까운 남색 */
+  --color-bg-secondary: #08080a; /* 깊이 있는 다크 그레이 */
+  --color-bg-tertiary: #111111;
   
   --color-bg-card: rgba(30, 30, 30, 0.4);
   --color-bg-card-hover: rgba(40, 40, 40, 0.6);
