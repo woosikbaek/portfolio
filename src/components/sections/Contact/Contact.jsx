@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../../common/Button/Button';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Contact.module.css';
 import profileData from '../../../data/profile.json';
 
-const Contact = () => {
+const Contact = memo(() => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,9 +21,8 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 여기에 폼 제출 로직을 추가하세요 (예: EmailJS, Formspree 등)
     console.log('Form submitted:', formData);
-    alert('메시지가 전송되었습니다! (실제로는 이메일 서비스를 연동해야 합니다)');
+    alert('메시지가 전송되었습니다! (실제 서비스 연동 시 메시지가 전달됩니다)');
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -62,7 +61,7 @@ const Contact = () => {
                 </div>
                 <div className={styles.methodContent}>
                   <div className={styles.methodLabel}>Gmail</div>
-                  <div className={styles.methodValue}>woosikbaek@gmail.com</div>
+                  <div className={styles.methodValue}>{profileData.email}</div>
                 </div>
               </a>
 
@@ -119,9 +118,7 @@ const Contact = () => {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
             <div className={styles.formGroup}>
-              <label htmlFor="name" className={styles.label}>
-                이름
-              </label>
+              <label htmlFor="name" className={styles.label}>이름</label>
               <input
                 type="text"
                 id="name"
@@ -134,9 +131,7 @@ const Contact = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>
-                이메일
-              </label>
+              <label htmlFor="email" className={styles.label}>이메일</label>
               <input
                 type="email"
                 id="email"
@@ -149,9 +144,7 @@ const Contact = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="message" className={styles.label}>
-                메시지
-              </label>
+              <label htmlFor="message" className={styles.label}>메시지</label>
               <textarea
                 id="message"
                 name="message"
@@ -170,6 +163,7 @@ const Contact = () => {
       </div>
     </section>
   );
-};
+});
 
+Contact.displayName = 'Contact';
 export default Contact;

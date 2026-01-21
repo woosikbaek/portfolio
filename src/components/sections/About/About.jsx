@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../../common/Button/Button';
 import styles from './About.module.css';
 import profileData from '../../../data/profile.json';
 
-const About = () => {
+const About = memo(() => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -87,6 +87,7 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
+About.displayName = 'About';
 export default About;

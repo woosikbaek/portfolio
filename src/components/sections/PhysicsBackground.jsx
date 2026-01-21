@@ -7,137 +7,186 @@ const PhysicsBackground = () => {
   const requestRef = useRef(null);
   const scrollYRef = useRef(0);
   const iconsRef = useRef([]);
+  const starsRef = useRef([]);
+
+  const spaceIcons = ['☀️', '🪐', '🌙', '☄️', '🌟', '🌍', '🛸', '🛰️', '🌑'];
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: false }); // 성능 향상: 투명도 계산 최소화
+    const ctx = canvas.getContext('2d', { alpha: false });
 
     const allSkills = skillsData.categories.flatMap(cat => cat.skills);
     const pageHeight = document.documentElement.scrollHeight || 5000;
 
-    // 1. 초기 아이콘(별) 생성
+    const initStars = () => {
+      const stars = [];
+      const starCount = 200;
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * pageHeight,
+          size: Math.random() * 1.5,
+          opacity: Math.random() * 0.7 + 0.3,
+          blinkSpeed: Math.random() * 0.02 + 0.005
+        });
+      }
+      starsRef.current = stars;
+    };
+
     const initIcons = () => {
       const icons = [];
-      const iconCount = 50; // 적절한 개수 유지
+      const iconCount = 50;
 
       for (let i = 0; i < iconCount; i++) {
         const skill = allSkills[i % allSkills.length];
+
+        let finalImage = skill.image;
+        if (!finalImage && skill.iconClass) {
+          const parts = skill.iconClass.split(' ')[0].split('-');
+          if (parts.length >= 3) {
+            const name = parts[1];
+            const version = parts[2];
+            finalImage = `https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/${name}/${name}-${version}.svg`;
+          }
+        }
+
         icons.push({
           skill,
+          imageUrl: finalImage,
           x: Math.random() * window.innerWidth,
-          y: Math.random() * pageHeight, // 전체 페이지 높이에 분산
-          z: Math.random() * 0.5 + 0.2, // 깊이감 (속도/크기 계수)
-          vx: (Math.random() - 0.5) * 0.2, // 아주 느린 무작위 이동
-          vy: (Math.random() - 0.5) * 0.2,
-          type: Math.random() > 0.9 ? 'comet' : 'float', // 10%는 혜성 후보
-          opacity: Math.random() * 0.5 + 0.3,
-          radius: Math.random() * 10 + 15, // 15~25 사이의 크기
-          imageObj: null
+          y: Math.random() * pageHeight,
+          z: Math.random() * 0.5 + 0.4,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          type: Math.random() > 0.88 ? 'comet' : 'float',
+          opacity: Math.random() * 0.4 + 0.6,
+          radius: Math.random() * 5 + 18,
+          imageObj: null,
+          isImageError: false,
+          fallbackEmoji: spaceIcons[i % spaceIcons.length]
         });
       }
 
-      // 이미지 미리 로딩
       icons.forEach(icon => {
-        if (icon.skill.image) {
+        if (icon.imageUrl) {
           const img = new Image();
-          img.src = icon.skill.image;
-          icon.imageObj = img;
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            if (img.complete && img.naturalWidth > 0) {
+              icon.imageObj = img;
+            } else {
+              icon.isImageError = true;
+            }
+          };
+          img.onerror = () => { icon.isImageError = true; };
+          img.src = icon.imageUrl;
+        } else {
+          icon.isImageError = true;
         }
       });
 
       iconsRef.current = icons;
     };
 
-    // 2. 혜성(Comet) 발사 로직
     const triggerComet = (icon) => {
       if (icon.type === 'comet' && !icon.isFlying) {
         icon.isFlying = true;
         icon.x = -100;
         icon.y = Math.random() * window.innerHeight + scrollYRef.current;
-        icon.vx = Math.random() * 5 + 5; // 빠른 속도
+        icon.vx = Math.random() * 7 + 7;
         icon.vy = (Math.random() - 0.5) * 2;
         icon.opacity = 1;
       }
     };
 
-    // 3. 드로잉 함수
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // 배경을 지워 투명하게 유지
-
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       const scrollY = window.scrollY;
       scrollYRef.current = scrollY;
 
+      starsRef.current.forEach(star => {
+        star.opacity += star.blinkSpeed;
+        if (star.opacity > 1 || star.opacity < 0.2) star.blinkSpeed *= -1;
+        const relativeY = (star.y - scrollY * 0.3) % pageHeight;
+        const finalY = relativeY < 0 ? relativeY + pageHeight : relativeY;
+        if (finalY < canvas.height) {
+          ctx.beginPath();
+          ctx.arc(star.x, finalY, star.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+          ctx.fill();
+        }
+      });
+
       iconsRef.current.forEach(icon => {
-        // 위치 업데이트
         icon.x += icon.vx;
         icon.y += icon.vy;
 
-        // 화면 밖으로 나가면 반대편으로 (Floater 기준)
         if (icon.type === 'float') {
           if (icon.x < -50) icon.x = canvas.width + 50;
           if (icon.x > canvas.width + 50) icon.x = -50;
           if (icon.y < -50) icon.y = pageHeight + 50;
           if (icon.y > pageHeight + 50) icon.y = -50;
         } else if (icon.isFlying) {
-          // 혜성 로직
-          if (icon.x > canvas.width + 200) {
+          if (icon.x > canvas.width + 300) {
             icon.isFlying = false;
-            icon.opacity = Math.random() * 0.5 + 0.3;
+            icon.opacity = Math.random() * 0.4 + 0.6;
           }
         }
 
-        // 혜성 랜덤 발사
-        if (icon.type === 'comet' && !icon.isFlying && Math.random() > 0.999) {
+        if (icon.type === 'comet' && !icon.isFlying && Math.random() > 0.998) {
           triggerComet(icon);
         }
 
-        // 현재 뷰포트에 보이는지 확인
         const relativeY = icon.y - scrollY;
         if (relativeY > -100 && relativeY < canvas.height + 100) {
           ctx.save();
-          ctx.globalAlpha = icon.opacity * (icon.isFlying ? 1 : icon.z); // 멀리 있는건 흐릿하게
+          ctx.globalAlpha = icon.isFlying ? 1 : icon.opacity;
 
-          const scale = icon.isFlying ? 1.2 : icon.z + 0.5;
+          const scale = icon.isFlying ? 1.2 : icon.z;
           const currentRadius = icon.radius * scale;
 
-          // 1. 공 모양 배경
+          ctx.shadowBlur = icon.isFlying ? 20 : 15;
+          ctx.shadowColor = 'rgba(75, 53, 201, 0.8)';
+
           ctx.beginPath();
           ctx.arc(icon.x, relativeY, currentRadius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(20, 20, 40, 0.8)';
+          ctx.fillStyle = 'rgba(25, 25, 50, 0.95)';
           ctx.fill();
-          ctx.strokeStyle = icon.isFlying ? 'rgba(168, 85, 247, 0.8)' : 'rgba(99, 102, 241, 0.3)';
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = 'rgba(120, 120, 255, 0.9)';
+          ctx.lineWidth = 1.5;
           ctx.stroke();
 
-          // 2. 아이콘 또는 텍스트
+          ctx.shadowBlur = 0;
+
           if (icon.imageObj && icon.imageObj.complete) {
             ctx.drawImage(
               icon.imageObj,
-              icon.x - currentRadius * 0.6,
-              relativeY - currentRadius * 0.6,
-              currentRadius * 1.2,
-              currentRadius * 1.2
+              icon.x - currentRadius * 0.65,
+              relativeY - currentRadius * 0.65,
+              currentRadius * 1.3,
+              currentRadius * 1.3
             );
-          } else {
-            ctx.fillStyle = '#fff';
-            ctx.font = `${Math.floor(10 * scale)}px Inter`;
+          } else if (icon.isImageError) {
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `${Math.floor(22 * scale)}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(icon.skill.emoji || icon.skill.name.substring(0, 2), icon.x, relativeY);
+            ctx.fillText(icon.fallbackEmoji, icon.x, relativeY);
           }
 
-          // 혜성 꼬리 효과
           if (icon.isFlying) {
-            const tailGrad = ctx.createLinearGradient(icon.x, relativeY, icon.x - 100, relativeY - icon.vy * 10);
-            tailGrad.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
-            tailGrad.addColorStop(1, 'transparent');
+            const tailLength = 200;
+            const angle = Math.atan2(icon.vy, icon.vx);
             ctx.beginPath();
-            ctx.moveTo(icon.x, relativeY);
-            ctx.lineTo(icon.x - 100, relativeY - icon.vy * 10);
-            ctx.lineWidth = currentRadius;
-            ctx.strokeStyle = tailGrad;
-            ctx.stroke();
+            ctx.arc(icon.x, relativeY, currentRadius * 0.95, angle + Math.PI - 0.6, angle + Math.PI + 0.6);
+            ctx.lineTo(icon.x - Math.cos(angle) * tailLength, relativeY - Math.sin(angle) * tailLength);
+            ctx.closePath();
+            const tailGrad = ctx.createLinearGradient(icon.x, relativeY, icon.x - Math.cos(angle) * tailLength, relativeY - Math.sin(angle) * tailLength);
+            tailGrad.addColorStop(0, 'rgba(75, 53, 201, 0.8)');
+            tailGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = tailGrad;
+            ctx.fill();
           }
 
           ctx.restore();
@@ -153,6 +202,7 @@ const PhysicsBackground = () => {
     };
 
     handleResize();
+    initStars();
     initIcons();
     requestRef.current = requestAnimationFrame(draw);
 

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import Card from '../../common/Card/Card';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
 import styles from './Projects.module.css';
 import projectsData from '../../../data/projects.json';
 
-const Projects = () => {
-  // 유튜브 ID 추출 함수
+const Projects = memo(() => {
   const getYoutubeId = (url) => {
     if (!url) return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -82,6 +81,7 @@ const Projects = () => {
                             src={project.image}
                             alt={project.title}
                             className={styles.image}
+                            loading="lazy"
                             onError={(e) => {
                               e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="240"%3E%3Crect width="400" height="240" fill="%231a1a24"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%236366f1"%3EProject Image%3C/text%3E%3C/svg%3E';
                             }}
@@ -144,13 +144,13 @@ const Projects = () => {
           </motion.div>
         ) : (
           <div className={styles.emptyState}>
-            <h3>프로젝트를 추가해주세요</h3>
-            <p>src/data/projects.json 파일을 수정하여 프로젝트를 추가할 수 있습니다.</p>
+            <h3>프로젝트 준비중입니다.</h3>
           </div>
         )}
       </div>
     </section>
   );
-};
+});
 
+Projects.displayName = 'Projects';
 export default Projects;
