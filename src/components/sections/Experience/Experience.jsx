@@ -19,24 +19,31 @@ const Experience = memo(() => {
               <motion.div
                 key={exp.id}
                 className={styles.timelineItem}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
               >
-                <div className={styles.timelineDot}></div>
-                <div className={styles.timelineContent}>
-                  <div className={styles.period}>{exp.period}</div>
-                  <h3 className={styles.role}>{exp.role || exp.position}</h3>
-                  <h4 className={styles.company}>{exp.company}</h4>
+                <div className={styles.dot}></div>
+                <div className={styles.card}>
+                  <div className={styles.header}>
+                    <div>
+                      <h3 className={styles.company}>{exp.company}</h3>
+                      <h4 className={styles.position}>{exp.role || exp.position}</h4>
+                    </div>
+                    <div className={styles.period}>{exp.period}</div>
+                  </div>
+
                   <p className={styles.description}>{exp.description}</p>
 
                   {exp.achievements && (
-                    <ul className={styles.achievements}>
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i}>{achievement}</li>
-                      ))}
-                    </ul>
+                    <div className={styles.achievements}>
+                      <ul className={styles.achievementsList}>
+                        {exp.achievements.map((achievement, i) => (
+                          <li key={i} className={styles.achievementItem}>{achievement}</li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
                 </div>
               </motion.div>
