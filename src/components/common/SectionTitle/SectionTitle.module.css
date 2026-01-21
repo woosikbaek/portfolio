@@ -1,0 +1,87 @@
+.sectionTitle {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+  position: relative;
+}
+
+.title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-sm);
+  display: inline-block;
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-tertiary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+.decorator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.line {
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  /* 성능 최적화를 위해 애니메이션 제거 */
+  /* animation: pulse 2s ease-in-out infinite; */
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* Alignment Variants */
+.left {
+  text-align: left;
+}
+
+.left .subtitle {
+  margin-left: 0;
+}
+
+.right {
+  text-align: right;
+}
+
+.right .subtitle {
+  margin-right: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .subtitle {
+    font-size: var(--font-size-base);
+  }
+}

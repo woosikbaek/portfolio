@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Bros - AI 도로안전망 소셜 플랫폼",
+    "description": "AI 기반 위험 구간 감지 및 커뮤니티 피드 기능을 제공하는 도로 안전 정보 공유 플랫폼. React 19 기반 프론트엔드 개발을 담당하며, Redux Toolkit을 활용한 복잡한 상태 관리와 Leaflet 지도 시스템 구축을 주도했습니다.",
+    "image": "/projects/bros.jpg",
+    "tags": ["React 19", "Redux Toolkit", "React Query", "Leaflet", "Bootstrap", "Vite", "OAuth", "JWT"],
+    "github": "https://github.com/woosikbaek/bros-frontend",
+    "demo": "https://www.youtube.com/watch?v=Y5KoIeUuco0",
+    "featured": true,
+    "year": "2025",
+    "role": "프론트엔드 개발",
+    "highlights": [
+      "React 19 + Vite 기반 모던 프론트엔드 아키텍처 설계 및 구현",
+      "Redux Toolkit을 활용한 전역 상태 관리로 8개 이상의 slice 통합 관리",
+      "Leaflet 기반 지도 시스템 구축 (마커, 위험구간, OSRM 경로 탐색)",
+      "JWT 자동 재발급 및 OAuth(Google/Kakao/Naver) 멀티 소셜 로그인 구현",
+      "Instagram 스타일 무한 스크롤 피드 및 실시간 검색 기능 개발",
+      "코스메틱 스토어 및 카카오페이 결제 시스템 프론트엔드 구현",
+      "라이트/다크 테마 시스템 및 반응형 UI 설계"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "404found - AI 스마트팩토리 검사 시스템",
+    "description": "IoT 센서와 AI 카메라를 활용한 자동차 품질 검사 시스템. 실시간 데이터 수집, AI 결함 탐지, 근태 관리 및 팀 커뮤니케이션 기능을 통합한 종합 관리 플랫폼입니다.",
+    "image": "/projects/404found.jpg",
+    "tags": ["React", "Flask", "Spring Boot", "IoT", "MQTT", "Raspberry Pi", "Socket.io", "MySQL"],
+    "github": "https://github.com/woosikbaek/404found",
+    "demo": "https://www.youtube.com/watch?v=gPBmVkVSfhc",
+    "featured": true,
+    "year": "2025",
+    "role": "IoT 하드웨어 총괄 & 풀스택 개발",
+    "highlights": [
+      "컨베이어벨트, 초음파 센서, 로봇팔, 카메라 등 전체 설비 구축 및 배선 총괄",
+      "Raspberry Pi 2대 활용한 IoT 시스템 구성",
+      "pigpiod를 활용한 로봇팔 제어 코드 개발",
+      "MQTT 프로토콜 기반 실시간 센서 데이터 수집 시스템 구축",
+      "WebSocket 통신으로 지연시간 50ms 이하 달성"
+    ]
+  }
+]
