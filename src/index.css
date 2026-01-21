@@ -108,9 +108,19 @@ a {
   }
 }
 
-@keyframes float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -15px, 0); }
+@media (max-width: 768px) {
+  :root {
+    --section-padding: var(--spacing-4xl) 0;
+    --font-size-6xl: 2.5rem;
+    --font-size-5xl: 2rem;
+    --font-size-4xl: 1.75rem;
+    --font-size-3xl: 1.5rem;
+    --font-size-2xl: 1.25rem;
+  }
+  
+  .container {
+    padding: 0 var(--spacing-md);
+  }
 }
 
 .fade-in-up {

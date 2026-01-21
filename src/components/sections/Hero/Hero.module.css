@@ -155,14 +155,33 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 0 var(--spacing-md);
+  }
   .title {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-3xl); /* 크기 축소 */
+    margin-bottom: var(--spacing-sm);
   }
   .description {
     font-size: var(--font-size-base);
+    padding: 0 var(--spacing-sm);
   }
   .actions {
     flex-direction: column;
-    align-items: stretch;
+    width: 100%;
+    max-width: 300px;
+  }
+  .heroBackgroundImage {
+    max-width: 95%;
+    max-height: 80%; /* 모바일 수직 공간 고려 */
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+  .greeting {
+    font-size: var(--font-size-base);
   }
 }
