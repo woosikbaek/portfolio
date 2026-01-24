@@ -61,7 +61,7 @@ const Hero = () => {
             className={styles.scrollGuide}
             style={{ opacity: guideOpacity }}
           >
-            <p>Scroll down to enter</p>
+            <p className={styles.scrollText}>Scroll down to enter</p>
           </motion.div>
         </motion.div>
 
