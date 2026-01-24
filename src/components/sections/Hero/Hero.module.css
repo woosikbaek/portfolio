@@ -3,6 +3,7 @@
     opacity: 0;
     transform: translate3d(0, 30px, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -10,8 +11,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .heroWrapper {
@@ -54,8 +60,15 @@
 }
 
 @keyframes introPulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(0.7); }
+
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(0.7);
+  }
 }
 
 .container {
@@ -144,36 +157,54 @@
   transform: translateX(-50%);
   color: var(--color-text-tertiary);
   font-size: var(--font-size-sm);
+  white-space: nowrap;
   letter-spacing: 2px;
   text-transform: uppercase;
   animation: fadeInOut 2s ease-in-out infinite;
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @media (max-width: 768px) {
   .hero {
     padding: 0 var(--spacing-md);
   }
+
   .title {
-    font-size: var(--font-size-3xl); /* 크기 축소 */
+    font-size: var(--font-size-3xl);
+    /* 크기 축소 */
     margin-bottom: var(--spacing-sm);
   }
+
   .description {
     font-size: var(--font-size-base);
     padding: 0 var(--spacing-sm);
   }
+
   .actions {
     flex-direction: column;
     width: 100%;
     max-width: 300px;
   }
+
   .heroBackgroundImage {
     max-width: 95%;
-    max-height: 80%; /* 모바일 수직 공간 고려 */
+    max-height: 80%;
+    /* 모바일 수직 공간 고려 */
+  }
+
+  .scrollText {
+    font-size: var(--font-size-xs);
   }
 }
 
@@ -181,7 +212,12 @@
   .title {
     font-size: var(--font-size-2xl);
   }
+
   .greeting {
     font-size: var(--font-size-base);
+  }
+
+  .scrollText {
+    font-size: var(--font-size-xs);
   }
 }
