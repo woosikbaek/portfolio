@@ -78,9 +78,6 @@ const About = memo(() => {
               <Button variant="primary" onClick={() => scrollToSection('contact')}>
                 연락하기
               </Button>
-              <Button variant="outline" href={profileData.resume} target="_blank">
-                이력서 다운로드
-              </Button>
             </div>
           </motion.div>
         </div>
