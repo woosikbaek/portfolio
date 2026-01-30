@@ -6,6 +6,15 @@ import styles from './Contact.module.css';
 import profileData from '../../../data/profile.json';
 import emailjs from '@emailjs/browser';
 
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+// Initialize EmailJS
+if (publicKey) {
+  emailjs.init(publicKey);
+}
+
 const Contact = memo(() => {
   const [formData, setFormData] = useState({
     name: '',
@@ -27,17 +36,24 @@ const Contact = memo(() => {
     setIsSending(true);
     setStatus(null);
 
+    if (!serviceId || !templateId || !publicKey) {
+      console.error('EmailJS Error: Environment variables are missing or incorrect.');
+      setStatus('error');
+      alert('설정 오류: EmailJS 환경 변수가 누락되었습니다. .env 파일을 확인해주세요.');
+      setIsSending(false);
+      return;
+    }
+
     try {
       await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         {
           from_name: formData.name,
           reply_to: formData.email,
           message: formData.message,
-          to_name: 'Woosik Baek', // 또는 본인 이름
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+          to_name: 'Woosik Baek',
+        }
       );
 
       setStatus('success');
